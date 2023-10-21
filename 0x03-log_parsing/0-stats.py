@@ -1,7 +1,14 @@
 #!/usr/bin/python3
 """ script that reads stdin line by line and computes metrics"""
+import re
 import sys
 
+
+# if the format is not this one, the line must be skipped
+input_format = r'^' \
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - ' \
+    r'\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6}\] ' \
+    r'"GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$'
 
 status_codes = (200, 301, 400, 401, 403, 404, 405, 500)
 
@@ -27,6 +34,9 @@ def print_stats(lines):
     all_status_codes = []
     try:
         for line in lines:
+            if not re.match(input_format, line):
+                continue
+
             parts = line.split(" ")
 
             if len(parts) != 9:
