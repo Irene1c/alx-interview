@@ -19,7 +19,6 @@ def print_stats(lines):
         Total file size: File size: <total size>
         Number of lines by status code: <status code>: <number>
         status codes should be printed in ascending order
-
     """
 
     line_count = 1
